@@ -1,27 +1,243 @@
-# PraticienFront
+# Application Frontend Praticien
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.12.
+Une interface utilisateur moderne et responsive pour la gestion des praticiens médicaux et de leurs spécialités. Cette application frontend se connecte à l'API Praticien backend pour fournir une expérience utilisateur complète et intuitive.
 
-## Development server
+## Table des matières
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- [Fonctionnalités](#fonctionnalités)
+- [Stack Technologique](#stack-technologique)
+- [Structure du Projet](#structure-du-projet)
+- [Démarrage](#démarrage)
+  - [Prérequis](#prérequis)
+  - [Installation](#installation)
+  - [Exécution de l'application](#exécution-de-lapplication)
+- [Composants principaux](#composants-principaux)
+- [Configuration](#configuration)
+- [Connexion avec le Backend](#connexion-avec-le-backend)
+- [Captures d'écran](#captures-décran)
+- [Licence](#licence)
 
-## Code scaffolding
+## Fonctionnalités
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Tableau de bord** : Vue d'ensemble des praticiens et des spécialités
+- **Gestion des praticiens** :
+  - Liste paginée, triable et filtrable des praticiens
+  - Ajout, modification et suppression de praticiens
+  - Vue détaillée des informations d'un praticien
+- **Gestion des spécialités** :
+  - Liste des spécialités médicales
+  - Ajout, modification et suppression de spécialités
+- **Gestion des adresses** :
+  - Support pour plusieurs types d'adresses (Bureau, Officielle, Domicile)
+  - Formulaire d'adresse réutilisable
+- **Fonctionnalités avancées** :
+  - Sélection des spécialités avec MatChip et autocomplétion
+  - Filtrage des praticiens par spécialité
+  - Recherche par nom de praticien
+  - Design responsive pour les appareils mobiles et de bureau
 
-## Build
+## Stack Technologique
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Angular 17+
+- Angular Material
+- TypeScript
+- RxJS
+- HTML/CSS
 
-## Running unit tests
+## Structure du Projet
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```
+praticien-frontend/
+├── src/
+│   ├── app/
+│   │   ├── core/
+│   │   │   ├── models/
+│   │   │   │   ├── adresse.model.ts
+│   │   │   │   ├── praticien.model.ts
+│   │   │   │   └── specialite.model.ts
+│   │   │   ├── services/
+│   │   │   │   ├── praticien.service.ts
+│   │   │   │   └── specialite.service.ts
+│   │   │   └── interceptors/
+│   │   │       └── api.interceptor.ts
+│   │   ├── shared/
+│   │   │   ├── components/
+│   │   │   │   ├── address-form/
+│   │   │   │   ├── confirm-dialog/
+│   │   │   │   └── speciality-chip-list/
+│   │   │   └── shared.module.ts
+│   │   ├── features/
+│   │   │   ├── praticiens/
+│   │   │   │   ├── praticien-list/
+│   │   │   │   ├── praticien-form/
+│   │   │   │   ├── praticien-detail/
+│   │   │   │   └── praticiens.module.ts
+│   │   │   ├── specialites/
+│   │   │   │   ├── specialite-list/
+│   │   │   │   ├── specialite-form/
+│   │   │   │   └── specialites.module.ts
+│   │   │   └── dashboard/
+│   │   │       ├── dashboard.component.ts
+│   │   │       ├── dashboard.component.html
+│   │   │       ├── dashboard.component.css
+│   │   │       └── dashboard.module.ts
+│   │   ├── app.component.ts
+│   │   ├── app.component.html
+│   │   ├── app.component.css
+│   │   ├── app.module.ts
+│   │   └── app-routing.module.ts
+│   ├── assets/
+│   ├── environments/
+│   │   ├── environment.ts
+│   │   └── environment.prod.ts
+│   ├── index.html
+│   ├── styles.css
+│   └── main.ts
+├── angular.json
+├── package.json
+└── tsconfig.json
+```
 
-## Running end-to-end tests
+## Démarrage
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Prérequis
 
-## Further help
+- Node.js (version 16+)
+- npm (version 8+)
+- API Praticien backend fonctionnelle
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Installation
+
+1. Clonez le dépôt :
+   ```bash
+   git clone https://github.com/votrenomdutilisateur/praticien-frontend.git
+   cd praticien-frontend
+   ```
+
+2. Installez les dépendances :
+   ```bash
+   npm install
+   ```
+
+3. Configurez l'URL de l'API dans le fichier `environments/environment.ts` :
+   ```typescript
+   export const environment = {
+     production: false,
+     apiUrl: 'http://localhost:8080/api'
+   };
+   ```
+
+### Exécution de l'application
+
+1. Démarrez le serveur de développement :
+   ```bash
+   ng serve
+   ```
+
+2. Accédez à l'application dans votre navigateur :
+   ```
+   http://localhost:4200
+   ```
+
+## Composants principaux
+
+### Tableau de bord
+
+Le tableau de bord présente une vue d'ensemble des données clés :
+- Nombre total de praticiens
+- Nombre total de spécialités
+- Pourcentage de praticiens actifs
+- Liste des praticiens récemment ajoutés
+- Top 5 des spécialités les plus utilisées
+
+### Liste des praticiens
+
+La liste des praticiens offre :
+- Tableau paginé avec tri par colonne
+- Filtre de recherche par nom ou prénom
+- Filtre par spécialité via sélecteur déroulant
+- Actions rapides pour voir, modifier ou supprimer un praticien
+- Indicateur de statut (actif/inactif)
+- Aperçu des spécialités associées
+
+### Formulaire de praticien
+
+Le formulaire de praticien permet :
+- Saisie des informations personnelles
+- Sélection multiple de spécialités avec autocomplétion
+- Gestion des adresses avec différents types
+- Validation des champs obligatoires
+
+### Sélecteur de spécialités
+
+Le composant `SpecialityChipListComponent` offre :
+- Sélection multiple de spécialités
+- Recherche avec autocomplétion
+- Affichage sous forme de "chips" (pastilles)
+- Possibilité de supprimer des spécialités sélectionnées
+
+## Configuration
+
+### Authentification
+
+L'application inclut un intercepteur HTTP qui ajoute automatiquement les identifiants d'authentification pour toutes les requêtes API :
+
+```typescript
+// api.interceptor.ts
+const username = 'Admin';
+const password = 'Mouride@2024';
+const basicAuth = 'Basic ' + btoa(username + ':' + password);
+
+const authReq = request.clone({
+  setHeaders: {
+    Authorization: basicAuth
+  }
+});
+```
+
+Pour modifier ces identifiants, mettez à jour les variables dans le fichier `api.interceptor.ts`.
+
+### Gestion des erreurs
+
+L'intercepteur gère également les erreurs HTTP :
+- Affichage des messages d'erreur dans des snackbars
+- Traitement spécifique selon le type d'erreur
+- Support des erreurs de validation
+
+## Connexion avec le Backend
+
+L'application frontend se connecte à l'API backend via des services qui encapsulent les appels HTTP :
+
+- `PraticienService` : gestion des praticiens, adresses et spécialités associées
+- `SpecialiteService` : gestion des spécialités médicales
+
+Ces services utilisent l'URL de base configurée dans le fichier `environment.ts`.
+
+## Captures d'écran
+
+- DashBoard
+
+![DashBoard](src/assets/images/screen1.png)
+![DashBoard](src/assets/images/dashboard2.png)
+- Liste des Praticiens
+
+![Liste des Praticiens](src/assets/images/praticien.png)
+
+- Detail d'un Praticien
+
+![Detail d'un Praticien](src/assets/images/detail-praticien.png)
+![Detail d'un Praticien](src/assets/images/detail-praticien2.png)
+
+- Liste des Spécialités
+![Liste des Spécialités](src/assets/images/list-specialites.png)
+## Licence
+
+NONE
+
+## Auteur
+
+Moussa FALL (kallah94)
+
+---
+
+© 2025 Application Frontend Praticien
