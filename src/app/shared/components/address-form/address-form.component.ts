@@ -36,7 +36,7 @@ export class AddressFormComponent implements OnInit {
       complementRue: [this.address?.complementRue || ''],
       codePostal: [this.address?.codePostal || '', Validators.required],
       ville: [this.address?.ville || '', Validators.required],
-      pays: [this.address?.pays || 'France', Validators.required],
+      pays: [this.address?.pays || 'Senegal', Validators.required],
       adressePrincipale: [this.address?.adressePrincipale || false]
     });
   }

@@ -6,16 +6,59 @@
   bottom: 0;
   left: 0;
   right: 0;
+  overflow: hidden;
+  background-color: #f9fafc;
 }
 
 .main-toolbar {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 2;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 64px;
+  padding: 0 24px 0 16px;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(90deg, var(--primary) 0%, #1565c0 100%) !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.main-toolbar::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.05) 100%);
 }
 
 .app-title {
-  margin-left: 8px;
+  font-size: 22px;
+  font-weight: 500;
+  margin-left: 12px;
+  letter-spacing: 0.3px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  position: relative;
+}
+
+.app-title::before {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: white;
+  opacity: 0.7;
+  transition: width 0.3s ease;
+}
+
+.main-toolbar:hover .app-title::before {
+  width: 100%;
 }
 
 .spacer {
@@ -24,17 +67,285 @@
 
 .sidenav-container {
   flex: 1;
+  margin-top: 64px;
+  height: calc(100% - 64px);
+  z-index: 1;
 }
 
 .sidenav {
-  min-width: 250px;
+  width: 280px;
+  border-right: none;
+  background-color: white;
+  box-shadow: 3px 0 15px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.sidenav.mat-drawer-opened {
+  box-shadow: 3px 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.mat-drawer-inner-container {
+  overflow-x: hidden !important;
+  background-image:
+    radial-gradient(circle at top left, rgba(25, 118, 210, 0.02) 0%, rgba(255, 255, 255, 0) 60%),
+    linear-gradient(to bottom, rgba(25, 118, 210, 0.01) 0%, rgba(255, 255, 255, 0) 30%);
+}
+
+.mat-nav-list {
+  padding-top: 20px;
+}
+
+.mat-nav-list a {
+  height: 56px;
+  margin: 6px 10px;
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.mat-nav-list a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--primary) 0%, rgba(25, 118, 210, 0.5) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.mat-nav-list a:hover {
+  background-color: rgba(25, 118, 210, 0.05);
+  transform: translateX(3px);
+}
+
+.mat-nav-list a:hover::before {
+  opacity: 0.5;
+}
+
+.mat-nav-list a.active {
+  background-color: rgba(25, 118, 210, 0.1) !important;
+  color: var(--primary);
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.15);
+  transform: translateX(3px);
+}
+
+.mat-nav-list a.active::before {
+  opacity: 1;
+}
+
+.mat-nav-list a.active .mat-icon {
+  color: var(--primary);
+  opacity: 1;
+}
+
+.mat-nav-list .mat-icon {
+  margin-right: 16px;
+  color: var(--text-secondary);
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.mat-nav-list a:hover .mat-icon {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+.mat-divider {
+  margin: 16px 16px;
+  background-color: rgba(0, 0, 0, 0.08);
 }
 
 .content {
-  height: 100%;
-  overflow: auto;
+  padding: 0;
+  background-color: #f9fafc;
+  min-height: calc(100vh - 64px);
+  position: relative;
+  transition: all 0.3s ease;
 }
 
-.active {
-  background-color: rgba(0, 0, 0, 0.04);
+.content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0));
+  pointer-events: none;
+}
+
+mat-sidenav-content {
+  background-color: #f9fafc;
+  transition: background-color 0.3s ease;
+}
+
+/* Burger menu button */
+.main-toolbar button {
+  color: white;
+  transition: all 0.3s ease;
+  width: 42px;
+  height: 42px;
+}
+
+.main-toolbar button:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  transform: rotate(90deg);
+}
+
+.main-toolbar button .mat-icon {
+  transition: transform 0.3s ease;
+}
+
+.main-toolbar button:hover .mat-icon {
+  transform: scale(1.1);
+}
+
+/* Animation for sidenav */
+.mat-drawer-transition .mat-drawer-content {
+  transition: margin 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.mat-drawer.mat-drawer-side {
+  transition: transform 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Custom scrollbar for sidenav */
+.mat-drawer-inner-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.mat-drawer-inner-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.mat-drawer-inner-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.15);
+  border-radius: 3px;
+  transition: background-color 0.3s ease;
+}
+
+.mat-drawer-inner-container::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+/* Overlay when sidenav is open on mobile */
+.mat-drawer-backdrop.mat-drawer-shown {
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .app-title {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-toolbar {
+    height: 56px;
+    padding: 0 16px 0 12px;
+  }
+
+  .app-title {
+    font-size: 18px;
+    margin-left: 8px;
+  }
+
+  .main-toolbar button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .sidenav-container {
+    margin-top: 56px;
+    height: calc(100% - 56px);
+  }
+
+  .sidenav {
+    width: 85%;
+    max-width: 280px;
+  }
+
+  .content {
+    min-height: calc(100vh - 56px);
+  }
+
+  .mat-nav-list a {
+    height: 50px;
+    margin: 4px 8px;
+  }
+
+  .mat-nav-list .mat-icon {
+    margin-right: 12px;
+  }
+}
+
+/* Fancy button animation in toolbar */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+.main-toolbar button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.4);
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+}
+
+.main-toolbar button:active::after {
+  animation: ripple 0.6s ease-out;
+}
+
+/* Shadow under the toolbar */
+.main-toolbar::before {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+  pointer-events: none;
+}
+
+/* Hover effect for sidenav, lifting items */
+.mat-nav-list a:hover {
+  transform: translateX(3px) translateY(-1px);
+}
+
+/* Logo in toolbar styling */
+.app-logo {
+  display: flex;
+  align-items: center;
+}
+
+/* Animations for page transitions */
+router-outlet + * {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
