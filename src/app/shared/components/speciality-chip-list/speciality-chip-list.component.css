@@ -1,19 +1,100 @@
+/* Specialty Chip List Styles - For Angular Material */
 .speciality-chip-list {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
+/* Style the chip container */
+.speciality-chip-list .mat-mdc-form-field {
+  width: 100%;
+}
+
+/* Style the chip grid */
+.speciality-chip-list .mat-mdc-chip-grid {
+  padding: 5px 0;
+}
+
+/* Style individual chips */
+.speciality-chip-list .mat-mdc-chip-row {
+  background-color: var(--secondary-light, #e8f5e9) !important;
+  color: var(--secondary, #43a047) !important;
+  transition: all 0.2s ease;
+  border: 1px solid transparent !important;
+  font-weight: 500;
+}
+
+.speciality-chip-list .mat-mdc-chip-row:hover {
+  background-color: var(--secondary, #43a047) !important;
+  color: white !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Style the remove icon */
+.speciality-chip-list .mat-mdc-chip-row .mat-icon {
+  color: inherit !important;
+  opacity: 0.7;
+}
+
+.speciality-chip-list .mat-mdc-chip-row:hover .mat-icon {
+  opacity: 1;
+}
+
+/* Style the input area */
+.speciality-chip-list input.mat-mdc-input-element {
+  margin-left: 4px;
+}
+
+/* Style autocomplete options */
+.mat-mdc-autocomplete-panel .mat-mdc-option {
+  padding: 8px 16px;
+  line-height: 1.4;
+}
+
+.mat-mdc-autocomplete-panel .mat-mdc-option.mat-mdc-option-active {
+  background-color: var(--primary-light, #e3f2fd);
+}
+
+/* Loading indicator styles */
+.loading-indicator {
+  display: flex;
+  align-items: center;
+  margin-top: 12px;
+  height: 24px;
+}
+
+.loading-indicator .mat-mdc-progress-spinner {
+  color: var(--primary, #1976d2) !important;
+}
+
+.loading-indicator span {
+  margin-left: 12px;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-secondary, #616161);
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+/* Responsive utility */
 .full-width {
   width: 100%;
 }
 
-.loading-indicator {
-  display: flex;
-  align-items: center;
-  margin-top: 5px;
+/* Material form field adjustments */
+.mat-mdc-form-field-subscript-wrapper {
+  padding-left: 8px !important;
 }
 
-.loading-indicator span {
-  margin-left: 10px;
-  font-size: 14px;
-  color: rgba(0, 0, 0, 0.6);
+/* Focus styles */
+.speciality-chip-list .mat-mdc-chip-row.mat-mdc-focus-indicator:focus {
+  background-color: var(--secondary, #43a047) !important;
+  color: white !important;
 }
+
+/* Important note: Angular Material uses MDC (Material Design Components) in newer versions,
+   so we need to target classes with the 'mdc' prefix. The !important flags are needed to
+   override Angular Material's built-in styles. */

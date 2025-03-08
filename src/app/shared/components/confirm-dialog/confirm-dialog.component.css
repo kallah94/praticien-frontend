@@ -1,3 +1,123 @@
-mat-dialog-actions {
-  padding: 8px 24px;
+.mat-mdc-dialog-container {
+  --mdc-dialog-container-shape: 16px;
+  backdrop-filter: blur(10px);
+}
+
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.15), 0 10px 10px rgba(0, 0, 0, 0.10) !important;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  animation: dialogFadeIn 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.mat-mdc-dialog-container .mdc-dialog__surface::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--danger) 0%, var(--primary) 100%);
+}
+
+h2.mat-mdc-dialog-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  padding: 24px 24px 8px;
+  position: relative;
+}
+
+.mat-mdc-dialog-content {
+  color: var(--text-secondary);
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 0 24px 20px;
+  margin: 0;
+}
+
+.mat-mdc-dialog-actions {
+  padding: 12px 24px 24px;
+  margin-bottom: 0;
+  gap: 12px;
+}
+
+.mat-mdc-dialog-actions button {
+  min-width: 100px;
+  border-radius: 20px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  padding: 0 20px;
+  height: 40px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.mat-mdc-dialog-actions button.mat-mdc-button {
+  border: 1px solid var(--medium-gray);
+}
+
+.mat-mdc-dialog-actions button.mat-mdc-button:hover {
+  background-color: var(--light-gray);
+  border-color: var(--dark-gray);
+}
+
+.mat-mdc-dialog-actions button.mat-mdc-raised-button {
+  box-shadow: 0 4px 12px rgba(211, 47, 47, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.mat-mdc-dialog-actions button.mat-mdc-raised-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transition: all 0.6s ease;
+}
+
+.mat-mdc-dialog-actions button.mat-mdc-raised-button:hover {
+  box-shadow: 0 8px 16px rgba(211, 47, 47, 0.3);
+  transform: translateY(-2px);
+}
+
+.mat-mdc-dialog-actions button.mat-mdc-raised-button:hover::before {
+  left: 100%;
+}
+
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
+  backdrop-filter: blur(3px);
+}
+
+@keyframes dialogFadeIn {
+  from { opacity: 0; transform: translateY(-20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 480px) {
+  h2.mat-mdc-dialog-title {
+    font-size: 20px;
+    padding: 20px 20px 8px;
+  }
+
+  .mat-mdc-dialog-content {
+    font-size: 15px;
+    padding: 0 20px 16px;
+  }
+
+  .mat-mdc-dialog-actions {
+    padding: 8px 20px 20px;
+  }
+
+  .mat-mdc-dialog-actions button {
+    flex: 1;
+  }
 }

@@ -1,66 +1,125 @@
+/* Enhanced Dashboard Styles for Health Practitioner Management */
+
 .dashboard-container {
-  padding: 20px;
+  padding: 32px 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+  background-color: #f9fafc;
+  min-height: calc(100vh - 64px); /* Adjust based on your header height */
 }
 
+/* Header with statistics counter animation */
 .dashboard-container h1 {
-  margin-top: 0;
-  margin-bottom: 24px;
+  color: var(--primary);
+  margin-bottom: 32px;
+  font-size: 32px;
   font-weight: 500;
+  position: relative;
+  padding-bottom: 16px;
 }
 
+.dashboard-container h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+  border-radius: 2px;
+}
+
+/* Elegant loading state */
 .loading-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 40px;
+  height: 400px;
 }
 
-/* Summary Cards Styles */
+.loading-container .mat-mdc-progress-spinner {
+  color: var(--primary);
+}
+
+.loading-container::after {
+  content: 'Chargement des données...';
+  margin-top: 16px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+/* Summary Cards Section with depth and dimension */
 .summary-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  margin-bottom: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
 }
 
 .summary-card {
-  height: 100%;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow: hidden;
+  background-color: white;
+  position: relative;
 }
 
-.summary-card mat-card-content {
+.summary-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 5px 10px rgba(0, 0, 0, 0.08) !important;
+}
+
+.summary-card:hover::before {
+  opacity: 1;
+}
+
+.summary-card .mat-mdc-card-content {
   display: flex;
-  padding: 16px;
+  padding: 24px;
+  align-items: center;
 }
 
+/* Styled card icons with gradient backgrounds */
 .card-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  margin-right: 16px;
+  width: 70px;
+  height: 70px;
+  border-radius: 14px;
+  margin-right: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
 }
 
-.praticiens-card .card-icon {
-  background-color: rgba(63, 81, 181, 0.1);
-  color: #3f51b5;
+.summary-card:hover .card-icon {
+  transform: scale(1.05);
 }
 
-.specialites-card .card-icon {
-  background-color: rgba(76, 175, 80, 0.1);
-  color: #4caf50;
-}
-
-.active-praticiens-card .card-icon {
-  background-color: rgba(33, 150, 243, 0.1);
-  color: #2196f3;
-}
-
-.card-icon mat-icon {
-  font-size: 30px;
-  width: 30px;
-  height: 30px;
+.card-icon .mat-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
 }
 
 .card-data {
@@ -68,98 +127,353 @@
 }
 
 .card-data h2 {
-  margin-top: 0;
-  margin-bottom: 8px;
-  font-size: 16px;
+  margin: 0 0 8px 0;
+  font-size: 18px;
   font-weight: 500;
-  color: rgba(0, 0, 0, 0.6);
+  color: var(--text-secondary);
 }
 
+/* Counter animation for numbers */
 .card-count {
-  font-size: 28px;
-  font-weight: 500;
-  margin-bottom: 8px;
+  font-size: 26px;
+  font-weight: 300;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 50%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
 }
 
 .card-percentage {
   font-size: 14px;
-  color: rgba(0, 0, 0, 0.6);
+  color: var(--text-secondary);
   margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.card-percentage::before {
+  content: '↑';
+  margin-right: 5px;
+  color: var(--success);
+}
+
+/* Card color themes with gradients */
+.praticiens-card .card-icon {
+  background: linear-gradient(135deg, #42a5f5 0%, #1976d2 100%);
+  color: white;
+}
+
+.specialites-card .card-icon {
+  background: linear-gradient(135deg, #66bb6a 0%, #43a047 100%);
+  color: white;
+}
+
+.active-praticiens-card .card-icon {
+  background: linear-gradient(135deg, #5c6bc0 0%, #3f51b5 100%);
+  color: white;
+}
+
+/* Card buttons */
+.summary-card .mat-mdc-stroked-button {
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+  font-size: 12px;
+  transition: all 0.3s ease;
+  padding: 0 16px;
+}
+
+.summary-card .mat-mdc-stroked-button:hover {
+  background-color: var(--primary-light);
+  color: var(--primary);
+}
+
+/* Section headers with consistent styling */
+.dashboard-section-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.recent-section h2,
+.specialties-section h2 {
+  margin-bottom: 16px;
+  font-size: 20px;
+  color: var(--primary);
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 8px;
+  display: inline-block;
+}
+
+.recent-section h2::after,
+.specialties-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+  border-radius: 1.5px;
 }
 
 /* Recent Practitioners Section */
-.recent-section, .specialties-section {
-  margin-bottom: 30px;
-}
-
-.recent-section h2, .specialties-section h2 {
-  font-size: 18px;
-  font-weight: 500;
-  margin-bottom: 16px;
+.recent-section {
+  margin-bottom: 40px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 24px;
 }
 
 .recent-table {
   width: 100%;
 }
 
-.empty-card {
-  text-align: center;
-  color: rgba(0, 0, 0, 0.54);
-  padding: 20px;
+/* Table styling */
+.mat-mdc-header-cell {
+  font-weight: 600 !important;
+  color: var(--primary) !important;
+  font-size: 14px !important;
+}
+
+.mat-mdc-row {
+  transition: all 0.2s ease;
+}
+
+.mat-mdc-row:hover {
+  background-color: var(--primary-light) !important;
+  cursor: pointer;
 }
 
 .specialites-list {
-  max-width: 200px;
+  max-width: 250px;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: var(--light-gray);
+  display: inline-block;
 }
 
 .no-data {
-  color: rgba(0, 0, 0, 0.38);
+  color: var(--text-disabled);
   font-style: italic;
 }
 
-/* Popular Specialties Section */
+/* Empty Card State with illustration */
+.empty-card {
+  text-align: center;
+  padding: 40px 24px;
+  color: var(--text-secondary);
+  background-color: white;
+  font-style: italic;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-card::before {
+  content: '📋';
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+/* Specialties Section */
+.specialties-section {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 24px;
+}
+
 .specialty-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
 }
 
 .specialty-card {
   text-align: center;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  background-color: var(--light-gray);
+  border: 1px solid transparent;
+}
+
+.specialty-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--secondary) 0%, var(--primary) 100%);
+}
+
+.specialty-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+  border-color: var(--medium-gray);
+}
+
+.specialty-card .mat-mdc-card-content {
+  padding: 20px;
 }
 
 .specialty-name {
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
+  color: var(--primary);
   margin-bottom: 8px;
 }
 
 .specialty-count {
-  color: rgba(0, 0, 0, 0.6);
+  font-size: 14px;
+  color: var(--secondary);
   margin-bottom: 16px;
+  font-weight: 500;
 }
 
-/* Responsive Adjustments */
+.specialty-card .mat-mdc-button {
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 12px;
+  margin-top: 8px;
+  background-color: var(--primary);
+  color: white;
+  font-weight: 500;
+  padding: 0 16px;
+}
+
+.specialty-card .mat-mdc-button:hover {
+  background-color: var(--accent);
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Animation for data loading */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dashboard-content {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Action buttons with tooltips */
+button.mat-mdc-icon-button {
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+button.mat-mdc-icon-button:hover {
+  transform: scale(1.15);
+  background-color: var(--primary-light);
+}
+
+button.mat-mdc-icon-button .mat-icon {
+  color: var(--primary);
+}
+
+/* Responsive adjustments with improved mobile experience */
+@media (max-width: 960px) {
+  .dashboard-container {
+    padding: 20px 16px;
+  }
+
+  .summary-cards {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+  }
+
+  .specialty-cards {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
+
 @media (max-width: 768px) {
+  .dashboard-container h1 {
+    font-size: 24px;
+  }
+
   .summary-cards {
     grid-template-columns: 1fr;
   }
 
   .specialty-cards {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  /* Adjust table for mobile */
+  .mat-column-email,
+  .mat-column-dateCreation {
+    display: none;
+  }
+
+  .card-count {
+    font-size: 32px;
+  }
+
+  .summary-card .mat-mdc-card-content {
+    padding: 16px;
+  }
+
+  .card-icon {
+    width: 60px;
+    height: 60px;
   }
 }
 
-@media (max-width: 480px) {
-  .specialty-cards {
-    grid-template-columns: 1fr;
+/* Print styles for reports */
+@media print {
+  .dashboard-container {
+    background-color: white;
+    padding: 0;
   }
 
-  .recent-table {
-    display: block;
-    overflow-x: auto;
+  .summary-card,
+  .recent-section,
+  .specialties-section {
+    box-shadow: none !important;
+    break-inside: avoid;
   }
+
+  .summary-card::before,
+  .specialty-card::before {
+    display: none;
+  }
+
+  button {
+    display: none !important;
+  }
+}
+
+/* Visual feedback when data is updating */
+.refreshing .card-count {
+  opacity: 0.7;
+  position: relative;
+}
+
+.refreshing .card-count::after {
+  content: '...';
+  position: absolute;
+  animation: ellipsis 1.5s infinite;
+}
+
+@keyframes ellipsis {
+  0% { content: '.'; }
+  33% { content: '..'; }
+  66% { content: '...'; }
 }

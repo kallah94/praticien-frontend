@@ -17,7 +17,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
 @Component({
   selector: 'app-praticien-list',
   templateUrl: './praticien-list.component.html',
-  styleUrls: ['./praticien-list.component.scss']
+  styleUrls: ['./praticien-list.component.css']
 })
 export class PraticienListComponent implements OnInit, AfterViewInit {
   praticiens: Praticien[] = [];
@@ -76,11 +76,13 @@ export class PraticienListComponent implements OnInit, AfterViewInit {
     this.loading = true;
     this.praticienService.getAllPraticiens().subscribe({
       next: (praticiens) => {
+        console.log('Loaded practitioners:', praticiens);
         this.praticiens = praticiens;
         this.dataSource.data = praticiens;
         this.loading = false;
       },
-      error: () => {
+      error: (error) => {
+        console.error('Error loading practitioners:', error);
         this.loading = false;
       }
     });
@@ -89,7 +91,11 @@ export class PraticienListComponent implements OnInit, AfterViewInit {
   loadSpecialites(): void {
     this.specialiteService.getAllSpecialites().subscribe({
       next: (specialites) => {
+        console.log('Loaded specialties:', specialites);
         this.specialites = specialites;
+      },
+      error: (error) => {
+        console.error('Error loading specialties:', error);
       }
     });
   }
@@ -98,11 +104,13 @@ export class PraticienListComponent implements OnInit, AfterViewInit {
     this.loading = true;
     this.praticienService.searchPraticiens(term).subscribe({
       next: (praticiens) => {
+        console.log('Search results:', praticiens);
         this.praticiens = praticiens;
         this.dataSource.data = praticiens;
         this.loading = false;
       },
-      error: () => {
+      error: (error) => {
+        console.error('Error searching practitioners:', error);
         this.loading = false;
       }
     });
@@ -110,14 +118,21 @@ export class PraticienListComponent implements OnInit, AfterViewInit {
 
   filterBySpecialite(specialiteId: string): void {
     this.loading = true;
+    console.log('Filtering by specialty ID:', specialiteId);
+
     this.praticienService.getPraticiensBySpecialite(specialiteId).subscribe({
       next: (praticiens) => {
+        console.log('Specialty filter results:', praticiens);
         this.praticiens = praticiens;
         this.dataSource.data = praticiens;
         this.loading = false;
       },
-      error: () => {
+      error: (error) => {
+        console.error('Error filtering by specialty:', error);
         this.loading = false;
+        this.snackBar.open('Erreur lors du filtrage par spécialité', 'Fermer', {
+          duration: 3000
+        });
       }
     });
   }
@@ -127,16 +142,35 @@ export class PraticienListComponent implements OnInit, AfterViewInit {
   }
 
   onViewPraticien(praticien: Praticien): void {
-    this.router.navigate(['/praticiens', praticien.id]);
+    if (praticien && praticien.id) {
+      this.router.navigate(['/praticiens', praticien.id]);
+    } else {
+      this.snackBar.open('ID de praticien manquant', 'Fermer', {
+        duration: 3000
+      });
+    }
   }
 
   onEditPraticien(praticien: Praticien): void {
-    event?.stopPropagation();
-    this.router.navigate(['/praticiens', praticien.id, 'edit']);
+    if (event) event.stopPropagation();
+    if (praticien && praticien.id) {
+      this.router.navigate(['/praticiens', praticien.id, 'edit']);
+    } else {
+      this.snackBar.open('ID de praticien manquant', 'Fermer', {
+        duration: 3000
+      });
+    }
   }
 
   onDeletePraticien(praticien: Praticien): void {
-    event?.stopPropagation();
+    if (event) event.stopPropagation();
+    if (!praticien || !praticien.id) {
+      this.snackBar.open('ID de praticien manquant', 'Fermer', {
+        duration: 3000
+      });
+      return;
+    }
+
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: {
@@ -152,11 +186,16 @@ export class PraticienListComponent implements OnInit, AfterViewInit {
           next: () => {
             this.loadPraticiens();
             this.snackBar.open('Le praticien a été supprimé avec succès', 'Fermer', {
-              duration: 3000
+              duration: 3000,
+              panelClass: ['success-snackbar']
             });
           },
-          error: () => {
+          error: (error) => {
+            console.error('Error deleting practitioner:', error);
             this.loading = false;
+            this.snackBar.open('Erreur lors de la suppression du praticien', 'Fermer', {
+              duration: 3000
+            });
           }
         });
       }
