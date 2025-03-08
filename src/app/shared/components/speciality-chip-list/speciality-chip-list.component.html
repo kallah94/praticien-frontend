@@ -1,0 +1,34 @@
+<div class="speciality-chip-list">
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Spécialités</mat-label>
+    <mat-chip-grid #chipGrid aria-label="Sélection des spécialités">
+      <mat-chip-row
+        *ngFor="let speciality of selectedSpecialities"
+        [removable]="removable"
+        (removed)="remove(speciality)"
+      >
+        {{ speciality.nom }}
+        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+      </mat-chip-row>
+      <input
+        placeholder="Nouvelle spécialité..."
+        #specialityInput
+        [formControl]="specialityCtrl"
+        [matChipInputFor]="chipGrid"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        [matAutocomplete]="auto"
+        (matChipInputTokenEnd)="add($event)"
+      />
+    </mat-chip-grid>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+      <mat-option *ngFor="let speciality of filteredSpecialities | async" [value]="speciality">
+        {{ speciality.nom }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <div *ngIf="loading" class="loading-indicator">
+    <mat-spinner diameter="20"></mat-spinner>
+    <span>Chargement des spécialités...</span>
+  </div>
+</div>

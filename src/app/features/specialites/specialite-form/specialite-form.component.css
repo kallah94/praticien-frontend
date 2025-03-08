@@ -1,0 +1,61 @@
+.specialite-form-container {
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  margin: 0;
+  font-weight: 500;
+}
+
+.form-row {
+  margin-bottom: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* Custom card actions container to replace mat-card-actions */
+.card-actions-container {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px;
+  gap: 8px;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.info-section {
+  margin-top: 24px;
+  padding: 12px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
+.creation-date, .modified-date {
+  display: flex;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.6);
+  margin: 8px 0;
+}
+
+.creation-date mat-icon, .modified-date mat-icon {
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+  margin-right: 8px;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}

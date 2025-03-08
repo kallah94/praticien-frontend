@@ -1,0 +1,111 @@
+<div class="praticien-detail-container">
+  <div class="header">
+    <h1>Détails du praticien</h1>
+    <div class="actions">
+      <button mat-button (click)="goBack()">Retour</button>
+      <button mat-raised-button color="primary" (click)="onEdit()">
+        <mat-icon>edit</mat-icon> Modifier
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+
+  <div *ngIf="!loading && praticien">
+    <mat-card>
+      <mat-card-content>
+        <div class="detail-header">
+          <div class="detail-title">
+            <h2>{{ praticien.prenom }} {{ praticien.nom }}</h2>
+            <span class="status-badge" [class.active]="praticien.actif" [class.inactive]="!praticien.actif">
+              {{ praticien.actif ? 'Actif' : 'Inactif' }}
+            </span>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="detail-section">
+          <h3>Informations de contact</h3>
+
+          <div class="detail-row">
+            <mat-icon>email</mat-icon>
+            <span>{{ praticien.email }}</span>
+          </div>
+
+          <div class="detail-row" *ngIf="praticien.telephone">
+            <mat-icon>phone</mat-icon>
+            <span>{{ praticien.telephone }}</span>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="detail-section">
+          <h3>Spécialités</h3>
+
+          <div *ngIf="!praticien.specialites || praticien.specialites.length === 0" class="empty-state">
+            <span>Aucune spécialité enregistrée</span>
+          </div>
+
+          <mat-chip-set *ngIf="praticien.specialites && praticien.specialites.length > 0">
+            <mat-chip *ngFor="let specialite of praticien.specialites">
+              {{ specialite.nom }}
+            </mat-chip>
+          </mat-chip-set>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="detail-section">
+          <h3>Adresses</h3>
+
+          <div *ngIf="!praticien.adresses || praticien.adresses.length === 0" class="empty-state">
+            <span>Aucune adresse enregistrée</span>
+          </div>
+
+          <mat-accordion *ngIf="praticien.adresses && praticien.adresses.length > 0">
+            <mat-expansion-panel *ngFor="let adresse of praticien.adresses">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <span [class.primary-address]="adresse.adressePrincipale">
+                    {{ getAdresseTypeLabel(adresse.type) }}
+                    <mat-icon *ngIf="adresse.adressePrincipale" class="primary-icon">star</mat-icon>
+                  </span>
+                </mat-panel-title>
+                <mat-panel-description>
+                  {{ adresse.rue }}, {{ adresse.codePostal }} {{ adresse.ville }}
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+
+              <div class="address-details">
+                <p *ngIf="adresse.complementRue"><strong>Complément :</strong> {{ adresse.complementRue }}</p>
+                <p><strong>Code postal :</strong> {{ adresse.codePostal }}</p>
+                <p><strong>Ville :</strong> {{ adresse.ville }}</p>
+                <p><strong>Pays :</strong> {{ adresse.pays }}</p>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="detail-section">
+          <h3>Informations supplémentaires</h3>
+
+          <div class="detail-row">
+            <strong>Date de création:</strong>
+            <span>{{ praticien.dateCreation | date:'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+
+          <div class="detail-row" *ngIf="praticien.dateModification">
+            <strong>Dernière modification:</strong>
+            <span>{{ praticien.dateModification | date:'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

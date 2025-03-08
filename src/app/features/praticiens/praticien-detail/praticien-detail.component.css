@@ -1,0 +1,141 @@
+.praticien-detail-container {
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  margin: 0;
+  font-weight: 500;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.detail-header {
+  margin-bottom: 24px;
+}
+
+.detail-title {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.detail-title h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-badge.active {
+  background-color: rgba(76, 175, 80, 0.12);
+  color: #2e7d32;
+}
+
+.status-badge.inactive {
+  background-color: rgba(244, 67, 54, 0.12);
+  color: #d32f2f;
+}
+
+.detail-section {
+  padding: 16px 0;
+}
+
+.detail-section h3 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.detail-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.detail-row mat-icon {
+  margin-right: 8px;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.detail-row strong {
+  min-width: 150px;
+  margin-right: 16px;
+}
+
+.empty-state {
+  color: rgba(0, 0, 0, 0.54);
+  font-style: italic;
+  padding: 8px 0;
+}
+
+.primary-address {
+  font-weight: 500;
+  color: #1976d2;
+  display: flex;
+  align-items: center;
+}
+
+.primary-icon {
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+  margin-left: 8px;
+  color: #ffc107;
+}
+
+.address-details p {
+  margin: 4px 0;
+}
+
+mat-divider {
+  margin: 8px 0;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .detail-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .detail-row {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+
+  .detail-row strong {
+    margin-bottom: 4px;
+  }
+}

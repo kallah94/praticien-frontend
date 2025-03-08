@@ -1,0 +1,141 @@
+<div class="dashboard-container">
+  <h1>Tableau de bord</h1>
+
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+
+  <div *ngIf="!loading" class="dashboard-content">
+    <!-- Summary Cards -->
+    <div class="summary-cards">
+      <mat-card class="summary-card praticiens-card">
+        <mat-card-content>
+          <div class="card-icon">
+            <mat-icon>people</mat-icon>
+          </div>
+          <div class="card-data">
+            <h2>Praticiens</h2>
+            <div class="card-count">{{ praticienCount }}</div>
+            <button mat-stroked-button color="primary" (click)="navigateToPraticiens()">
+              Voir tous les praticiens
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="summary-card specialites-card">
+        <mat-card-content>
+          <div class="card-icon">
+            <mat-icon>local_hospital</mat-icon>
+          </div>
+          <div class="card-data">
+            <h2>Spécialités</h2>
+            <div class="card-count">{{ specialiteCount }}</div>
+            <button mat-stroked-button color="primary" (click)="navigateToSpecialites()">
+              Voir toutes les spécialités
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="summary-card active-praticiens-card">
+        <mat-card-content>
+          <div class="card-icon">
+            <mat-icon>check_circle</mat-icon>
+          </div>
+          <div class="card-data">
+            <h2>Praticiens actifs</h2>
+            <div class="card-count">{{ activePraticienCount }}</div>
+            <div class="card-percentage">
+              {{ (activePraticienCount / (praticienCount || 1) * 100).toFixed(0) }}% du total
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Recent Practitioners -->
+    <div class="recent-section">
+      <h2>Praticiens récemment ajoutés</h2>
+      <mat-card *ngIf="recentPraticiens.length === 0" class="empty-card">
+        <mat-card-content>
+          Aucun praticien n'a été ajouté récemment.
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card *ngIf="recentPraticiens.length > 0">
+        <mat-card-content>
+          <table mat-table [dataSource]="recentPraticiens" class="recent-table">
+            <!-- Name Column -->
+            <ng-container matColumnDef="nom">
+              <th mat-header-cell *matHeaderCellDef>Nom</th>
+              <td mat-cell *matCellDef="let praticien">{{ praticien.nom }} {{ praticien.prenom }}</td>
+            </ng-container>
+
+            <!-- Email Column -->
+            <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef>Email</th>
+              <td mat-cell *matCellDef="let praticien">{{ praticien.email }}</td>
+            </ng-container>
+
+            <!-- Specialites Column -->
+            <ng-container matColumnDef="specialites">
+              <th mat-header-cell *matHeaderCellDef>Spécialités</th>
+              <td mat-cell *matCellDef="let praticien">
+                <div class="specialites-list">
+                  <span *ngIf="!praticien.specialites || praticien.specialites.length === 0" class="no-data">
+                    Aucune spécialité
+                  </span>
+                  <span *ngIf="praticien.specialites && praticien.specialites.length > 0">
+                    {{ getSpecialitesString(praticien.specialites) }}
+                  </span>
+                </div>
+              </td>
+            </ng-container>
+
+            <!-- Date Column -->
+            <ng-container matColumnDef="dateCreation">
+              <th mat-header-cell *matHeaderCellDef>Date d'ajout</th>
+              <td mat-cell *matCellDef="let praticien">{{ praticien.dateCreation | date:'dd/MM/yyyy' }}</td>
+            </ng-container>
+
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <td mat-cell *matCellDef="let praticien">
+                <button mat-icon-button color="primary" (click)="viewPraticien(praticien)">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="practitionerColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: practitionerColumns;"></tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Popular Specialties -->
+    <div class="specialties-section">
+      <h2>Spécialités les plus courantes</h2>
+      <mat-card *ngIf="popularSpecialites.length === 0" class="empty-card">
+        <mat-card-content>
+          Aucune spécialité n'est associée aux praticiens.
+        </mat-card-content>
+      </mat-card>
+
+      <div *ngIf="popularSpecialites.length > 0" class="specialty-cards">
+        <mat-card *ngFor="let specialite of popularSpecialites" class="specialty-card">
+          <mat-card-content>
+            <div class="specialty-name">{{ specialite.nom }}</div>
+            <div class="specialty-count">{{ specialite.count }} praticiens</div>
+            <button mat-button color="primary" (click)="viewSpecialite(specialite)">
+              Voir détails
+            </button>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

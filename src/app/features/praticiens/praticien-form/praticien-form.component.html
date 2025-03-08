@@ -1,0 +1,138 @@
+<div class="praticien-form-container">
+  <div class="header">
+    <h1>{{ editMode ? 'Modifier le praticien' : 'Ajouter un praticien' }}</h1>
+    <button mat-button (click)="goBack()">Retour</button>
+  </div>
+
+  <form [formGroup]="praticienForm" (ngSubmit)="onSubmit()">
+    <mat-card>
+      <mat-card-content>
+        <h2>Informations générales</h2>
+
+        <div class="form-row two-col">
+          <mat-form-field appearance="outline">
+            <mat-label>Nom</mat-label>
+            <input matInput formControlName="nom" required>
+            <mat-error *ngIf="praticienForm.get('nom')?.hasError('required')">
+              Le nom est obligatoire
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Prénom</mat-label>
+            <input matInput formControlName="prenom" required>
+            <mat-error *ngIf="praticienForm.get('prenom')?.hasError('required')">
+              Le prénom est obligatoire
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row two-col">
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" required type="email">
+            <mat-error *ngIf="praticienForm.get('email')?.hasError('required')">
+              L'email est obligatoire
+            </mat-error>
+            <mat-error *ngIf="praticienForm.get('email')?.hasError('email')">
+              L'email doit être valide
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Téléphone</mat-label>
+            <input matInput formControlName="telephone">
+            <mat-error *ngIf="praticienForm.get('telephone')?.hasError('pattern')">
+              Le numéro de téléphone doit être valide
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-checkbox formControlName="actif">Praticien actif</mat-checkbox>
+        </div>
+
+        <h2>Spécialités</h2>
+
+        <!-- Speciality Chip List Component -->
+        <app-speciality-chip-list
+          [selectedSpecialities]="selectedSpecialities"
+          (specialitiesChanged)="onSpecialitiesChanged($event)">
+        </app-speciality-chip-list>
+
+        <h2>Adresses</h2>
+
+        <div *ngIf="adresses.length === 0" class="empty-state">
+          <p>Aucune adresse enregistrée</p>
+        </div>
+
+        <div class="addresses-list">
+          <mat-accordion *ngIf="adresses.length > 0">
+            <mat-expansion-panel *ngFor="let adresse of adresses; let i = index">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <span [class.primary-address]="adresse.adressePrincipale">
+                    {{ getAdresseTypeLabel(adresse.type) }}
+                    <mat-icon *ngIf="adresse.adressePrincipale" class="primary-icon">star</mat-icon>
+                  </span>
+                </mat-panel-title>
+                <mat-panel-description>
+                  {{ adresse.rue }}, {{ adresse.codePostal }} {{ adresse.ville }}
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+
+              <div class="panel-content">
+                <div class="address-details">
+                  <p *ngIf="adresse.complementRue"><strong>Complément :</strong> {{ adresse.complementRue }}</p>
+                  <p><strong>Code postal :</strong> {{ adresse.codePostal }}</p>
+                  <p><strong>Ville :</strong> {{ adresse.ville }}</p>
+                  <p><strong>Pays :</strong> {{ adresse.pays }}</p>
+                </div>
+
+                <div class="panel-actions">
+                  <button mat-button color="primary" (click)="editAddress(i)">
+                    <mat-icon>edit</mat-icon> Modifier
+                  </button>
+                  <button mat-button color="warn" (click)="removeAddress(i)">
+                    <mat-icon>delete</mat-icon> Supprimer
+                  </button>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+
+        <div class="address-form-container" *ngIf="showAddressForm">
+          <app-address-form
+            [address]="currentAddress"
+            [editMode]="addressEditMode"
+            [addressIndex]="currentAddressIndex"
+            (save)="onAddressSave($event)"
+            (cancel)="onAddressCancel()">
+          </app-address-form>
+        </div>
+
+        <button
+          *ngIf="!showAddressForm"
+          mat-stroked-button
+          type="button"
+          color="primary"
+          class="add-address-btn"
+          (click)="addNewAddress()">
+          <mat-icon>add</mat-icon> Ajouter une adresse
+        </button>
+      </mat-card-content>
+
+      <div class="card-actions-container">
+        <button mat-button type="button" (click)="goBack()">Annuler</button>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="praticienForm.invalid || submitting">
+          {{ editMode ? 'Mettre à jour' : 'Enregistrer' }}
+        </button>
+      </div>
+    </mat-card>
+  </form>
+</div>

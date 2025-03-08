@@ -1,0 +1,19 @@
+.speciality-chip-list {
+  margin-bottom: 15px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.loading-indicator {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.loading-indicator span {
+  margin-left: 10px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.6);
+}

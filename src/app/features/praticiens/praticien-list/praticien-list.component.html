@@ -1,0 +1,127 @@
+<div class="praticien-list-container">
+  <div class="header">
+    <h1>Liste des praticiens</h1>
+    <div class="actions">
+      <button mat-raised-button color="primary" (click)="onAddPraticien()">
+        <mat-icon>add</mat-icon> Ajouter un praticien
+      </button>
+    </div>
+  </div>
+
+  <mat-card>
+    <mat-card-content>
+      <div class="filters">
+        <mat-form-field appearance="outline">
+          <mat-label>Rechercher</mat-label>
+          <input matInput placeholder="Rechercher un praticien" [formControl]="searchControl">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Filtrer par spécialité</mat-label>
+          <mat-select [formControl]="specialiteFilterControl">
+            <mat-option [value]="null">Toutes les spécialités</mat-option>
+            <mat-option *ngFor="let specialite of specialites" [value]="specialite.id">
+              {{ specialite.nom }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div *ngIf="loading" class="loading-container">
+        <mat-spinner diameter="50"></mat-spinner>
+      </div>
+
+      <div *ngIf="!loading && praticiens.length === 0" class="empty-state">
+        <mat-icon>person_off</mat-icon>
+        <p>Aucun praticien trouvé</p>
+      </div>
+
+      <div *ngIf="!loading && praticiens.length > 0">
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z0">
+          <!-- Nom Column -->
+          <ng-container matColumnDef="nom">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nom</th>
+            <td mat-cell *matCellDef="let praticien">{{ praticien.nom }} {{ praticien.prenom }}</td>
+          </ng-container>
+
+          <!-- Email Column -->
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+            <td mat-cell *matCellDef="let praticien">{{ praticien.email }}</td>
+          </ng-container>
+
+          <!-- Telephone Column -->
+          <ng-container matColumnDef="telephone">
+            <th mat-header-cell *matHeaderCellDef>Téléphone</th>
+            <td mat-cell *matCellDef="let praticien">{{ praticien.telephone }}</td>
+          </ng-container>
+
+          <!-- Specialites Column -->
+          <ng-container matColumnDef="specialites">
+            <th mat-header-cell *matHeaderCellDef>Spécialités</th>
+            <td mat-cell *matCellDef="let praticien">
+              <mat-chip-set>
+                <mat-chip *ngFor="let specialite of praticien.specialites; let i = index"
+                          [disableRipple]="true"
+                          [class.hidden]="i >= 2">
+                  {{ specialite.nom }}
+                </mat-chip>
+                <mat-chip *ngIf="praticien.specialites && praticien.specialites.length > 2"
+                          color="primary"
+                          [disableRipple]="true">
+                  +{{ praticien.specialites.length - 2 }}
+                </mat-chip>
+              </mat-chip-set>
+              <span *ngIf="!praticien.specialites || praticien.specialites.length === 0" class="no-data">
+                Aucune spécialité
+              </span>
+            </td>
+          </ng-container>
+
+          <!-- Status Column -->
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Statut</th>
+            <td mat-cell *matCellDef="let praticien">
+              <span class="status-badge" [class.active]="praticien.actif" [class.inactive]="!praticien.actif">
+                {{ praticien.actif ? 'Actif' : 'Inactif' }}
+              </span>
+            </td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let praticien">
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Actions" (click)="$event.stopPropagation()">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="onViewPraticien(praticien)">
+                  <mat-icon>visibility</mat-icon>
+                  <span>Voir</span>
+                </button>
+                <button mat-menu-item (click)="onEditPraticien(praticien)">
+                  <mat-icon>edit</mat-icon>
+                  <span>Modifier</span>
+                </button>
+                <button mat-menu-item (click)="onDeletePraticien(praticien)">
+                  <mat-icon>delete</mat-icon>
+                  <span>Supprimer</span>
+                </button>
+              </mat-menu>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onViewPraticien(row)" class="clickable-row"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"
+                       showFirstLastButtons
+                       aria-label="Sélectionner une page">
+        </mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

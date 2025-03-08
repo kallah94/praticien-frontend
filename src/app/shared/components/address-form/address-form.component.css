@@ -1,0 +1,33 @@
+.address-form-container {
+  padding: 16px;
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    color: rgba(0, 0, 0, 0.87);
+  }
+
+  .form-row {
+    margin-bottom: 16px;
+
+    &.two-col {
+      display: flex;
+      gap: 16px;
+
+      mat-form-field {
+        flex: 1;
+      }
+    }
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 24px;
+  }
+}

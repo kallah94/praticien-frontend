@@ -1,0 +1,51 @@
+<div class="specialite-form-container">
+  <div class="header">
+    <h1>{{ editMode ? 'Modifier la spécialité' : 'Ajouter une spécialité' }}</h1>
+    <button mat-button (click)="goBack()">Retour</button>
+  </div>
+
+  <form [formGroup]="specialiteForm" (ngSubmit)="onSubmit()">
+    <mat-card>
+      <mat-card-content>
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nom</mat-label>
+            <input matInput formControlName="nom" required>
+            <mat-error *ngIf="specialiteForm.get('nom')?.hasError('required')">
+              Le nom est obligatoire
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" rows="4"></textarea>
+          </mat-form-field>
+        </div>
+
+        <div *ngIf="editMode && specialite" class="info-section">
+          <p class="creation-date">
+            <mat-icon>calendar_today</mat-icon>
+            Créée le: {{ specialite.dateCreation | date:'dd/MM/yyyy HH:mm' }}
+          </p>
+          <p class="modified-date" *ngIf="specialite.dateModification">
+            <mat-icon>update</mat-icon>
+            Dernière modification: {{ specialite.dateModification | date:'dd/MM/yyyy HH:mm' }}
+          </p>
+        </div>
+      </mat-card-content>
+
+      <div class="card-actions-container">
+        <button mat-button type="button" (click)="goBack()">Annuler</button>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="specialiteForm.invalid || submitting">
+          {{ editMode ? 'Mettre à jour' : 'Enregistrer' }}
+        </button>
+      </div>
+    </mat-card>
+  </form>
+</div>

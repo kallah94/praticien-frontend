@@ -1,0 +1,165 @@
+.dashboard-container {
+  padding: 20px;
+}
+
+.dashboard-container h1 {
+  margin-top: 0;
+  margin-bottom: 24px;
+  font-weight: 500;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+/* Summary Cards Styles */
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.summary-card {
+  height: 100%;
+}
+
+.summary-card mat-card-content {
+  display: flex;
+  padding: 16px;
+}
+
+.card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 16px;
+}
+
+.praticiens-card .card-icon {
+  background-color: rgba(63, 81, 181, 0.1);
+  color: #3f51b5;
+}
+
+.specialites-card .card-icon {
+  background-color: rgba(76, 175, 80, 0.1);
+  color: #4caf50;
+}
+
+.active-praticiens-card .card-icon {
+  background-color: rgba(33, 150, 243, 0.1);
+  color: #2196f3;
+}
+
+.card-icon mat-icon {
+  font-size: 30px;
+  width: 30px;
+  height: 30px;
+}
+
+.card-data {
+  flex: 1;
+}
+
+.card-data h2 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.card-count {
+  font-size: 28px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.card-percentage {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.6);
+  margin-bottom: 16px;
+}
+
+/* Recent Practitioners Section */
+.recent-section, .specialties-section {
+  margin-bottom: 30px;
+}
+
+.recent-section h2, .specialties-section h2 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.recent-table {
+  width: 100%;
+}
+
+.empty-card {
+  text-align: center;
+  color: rgba(0, 0, 0, 0.54);
+  padding: 20px;
+}
+
+.specialites-list {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.no-data {
+  color: rgba(0, 0, 0, 0.38);
+  font-style: italic;
+}
+
+/* Popular Specialties Section */
+.specialty-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.specialty-card {
+  text-align: center;
+}
+
+.specialty-name {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.specialty-count {
+  color: rgba(0, 0, 0, 0.6);
+  margin-bottom: 16px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .summary-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .specialty-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .specialty-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .recent-table {
+    display: block;
+    overflow-x: auto;
+  }
+}

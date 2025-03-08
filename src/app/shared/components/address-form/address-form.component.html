@@ -1,0 +1,75 @@
+<form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+  <div class="address-form-container">
+    <h3>{{ editMode ? 'Modifier l\'adresse' : 'Ajouter une adresse' }}</h3>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Type d'adresse</mat-label>
+        <mat-select formControlName="type" required>
+          <mat-option *ngFor="let type of addressTypes" [value]="type.value">
+            {{ type.label }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="addressForm.get('type')?.hasError('required')">
+          Le type d'adresse est obligatoire
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Rue</mat-label>
+        <input matInput formControlName="rue" required>
+        <mat-error *ngIf="addressForm.get('rue')?.hasError('required')">
+          La rue est obligatoire
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Complément d'adresse</mat-label>
+        <input matInput formControlName="complementRue">
+      </mat-form-field>
+    </div>
+
+    <div class="form-row two-col">
+      <mat-form-field appearance="outline">
+        <mat-label>Code postal</mat-label>
+        <input matInput formControlName="codePostal" required>
+        <mat-error *ngIf="addressForm.get('codePostal')?.hasError('required')">
+          Le code postal est obligatoire
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Ville</mat-label>
+        <input matInput formControlName="ville" required>
+        <mat-error *ngIf="addressForm.get('ville')?.hasError('required')">
+          La ville est obligatoire
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Pays</mat-label>
+        <input matInput formControlName="pays" required>
+        <mat-error *ngIf="addressForm.get('pays')?.hasError('required')">
+          Le pays est obligatoire
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-checkbox formControlName="adressePrincipale">Adresse principale pour ce type</mat-checkbox>
+    </div>
+
+    <div class="form-actions">
+      <button mat-button type="button" (click)="onCancel()">Annuler</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="addressForm.invalid">
+        {{ editMode ? 'Mettre à jour' : 'Ajouter' }}
+      </button>
+    </div>
+  </div>
+</form>
